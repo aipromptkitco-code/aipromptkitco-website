@@ -1,0 +1,76 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+export interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  author: string;
+  tags: string[];
+}
+
+const { title, description, pubDate, author, tags } = Astro.props;
+const formattedDate = pubDate.toLocaleDateString('en-US', {
+  year: 'numeric', month: 'long', day: 'numeric'
+});
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="max-w-2xl mx-auto px-4 sm:px-6 py-16">
+
+    <!-- Tags -->
+    {tags.length > 0 && (
+      <div class="flex flex-wrap gap-2 mb-6">
+        {tags.map(tag => (
+          <span class="text-xs font-semibold uppercase tracking-wide text-[#D95E00] bg-[#FFF2E8] px-3 py-1 rounded-full">
+            {tag}
+          </span>
+        ))}
+      </div>
+    )}
+
+    <!-- Title -->
+    <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight mb-4">
+      {title}
+    </h1>
+
+    <!-- Meta -->
+    <div class="flex items-center gap-3 text-sm text-gray-500 mb-10 pb-8 border-b border-gray-100">
+      <span>{author}</span>
+      <span class="text-gray-300">&bull;</span>
+      <time datetime={pubDate.toISOString()}>{formattedDate}</time>
+    </div>
+
+    <!-- Content -->
+    <div class="prose prose-gray max-w-none
+      prose-headings:font-bold prose-headings:text-gray-900
+      prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4
+      prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
+      prose-p:text-gray-700 prose-p:leading-relaxed prose-p:mb-5
+      prose-a:text-[#D95E00] prose-a:font-medium prose-a:no-underline hover:prose-a:underline
+      prose-strong:text-gray-900
+      prose-ul:my-4 prose-li:text-gray-700 prose-li:mb-1
+      prose-blockquote:border-l-4 prose-blockquote:border-[#D95E00] prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-gray-600
+      prose-code:bg-gray-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono
+      prose-hr:border-gray-200">
+      <slot />
+    </div>
+
+    <!-- Footer CTA -->
+    <div class="mt-16 p-8 bg-[#FFF2E8] rounded-2xl border border-orange-100">
+      <div class="text-xs font-bold uppercase tracking-widest text-[#D95E00] mb-2">From AI Prompt Kit</div>
+      <h3 class="text-xl font-bold text-gray-900 mb-2">75 battle-tested prompts for freelance writers</h3>
+      <p class="text-gray-600 text-sm mb-4">Client emails, blank pages, cold pitches, late invoices — there's a prompt for all of it. 42 pages, $17, instant download.</p>
+      <a href="https://promptkit5.gumroad.com/l/hoimsp" target="_blank" rel="noopener"
+         class="inline-block bg-[#D95E00] text-white font-semibold px-6 py-2.5 rounded-full text-sm hover:bg-[#bf5200] transition-colors">
+        Get the Prompt Arsenal &rarr;
+      </a>
+    </div>
+
+    <!-- Back to blog -->
+    <div class="mt-10">
+      <a href="/blog" class="text-sm text-gray-500 hover:text-gray-900 transition-colors">&larr; Back to all articles</a>
+    </div>
+
+  </article>
+</BaseLayout>

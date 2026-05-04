@@ -1,0 +1,63 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const products = [
+  {
+    title: "The Freelance Writer's AI Prompt Arsenal",
+    description: "75 battle-tested prompts for writers who bill by the word and live by the deadline. 8 categories covering client emails, pitching, research, writing, editing, headlines, and running your business.",
+    price: "$17",
+    pages: "42 pages",
+    url: "https://promptkit5.gumroad.com/l/hoimsp",
+    tags: ["Freelance Writing", "ChatGPT Prompts"],
+    badge: "Bestseller",
+  },
+];
+---
+
+<BaseLayout
+  title="Products — AI Prompt Packs & Resources"
+  description="Practical AI prompt packs and guides for freelancers and creators. Instant download, no subscription."
+>
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 py-16">
+    <h1 class="text-3xl font-bold text-gray-900 mb-2">Products</h1>
+    <p class="text-gray-500 mb-12">Prompt packs, guides, and templates. Instant download. No subscription.</p>
+
+    <div class="space-y-6">
+      {products.map(product => (
+        <div class="border border-gray-200 rounded-2xl p-8 hover:border-gray-300 transition-colors">
+          <div class="flex items-start justify-between gap-4 mb-4">
+            <div>
+              {product.badge && (
+                <span class="text-xs font-bold uppercase tracking-widest text-[#D95E00] bg-[#FFF2E8] px-2.5 py-1 rounded-full mr-2">
+                  {product.badge}
+                </span>
+              )}
+              <h2 class="text-xl font-bold text-gray-900 mt-3 leading-snug">{product.title}</h2>
+            </div>
+            <div class="text-2xl font-bold text-gray-900 shrink-0">{product.price}</div>
+          </div>
+          <p class="text-gray-600 text-sm leading-relaxed mb-5">{product.description}</p>
+          <div class="flex flex-wrap items-center gap-3">
+            <a href={product.url} target="_blank" rel="noopener"
+               class="bg-[#D95E00] text-white font-semibold px-5 py-2.5 rounded-full text-sm hover:bg-[#bf5200] transition-colors">
+              Buy now — {product.price}
+            </a>
+            <span class="text-xs text-gray-400">{product.pages} &middot; PDF &middot; Instant download</span>
+          </div>
+          {product.tags.length > 0 && (
+            <div class="flex gap-2 mt-5 pt-5 border-t border-gray-100">
+              {product.tags.map(tag => (
+                <span class="text-xs text-gray-500 bg-gray-50 px-2.5 py-1 rounded-full">{tag}</span>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-10 p-6 bg-gray-50 rounded-xl text-sm text-gray-500">
+      All products are digital downloads delivered instantly via Gumroad. Questions? Email
+      <a href="mailto:aipromptkitco@gmail.com" class="text-[#D95E00] hover:underline">aipromptkitco@gmail.com</a>.
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,135 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+---
+
+<BaseLayout
+  title="AI Prompt Kit — Tools & Resources for Freelancers Who Use AI"
+  description="Reviews, guides, and resources for freelancers and creators who use AI tools seriously. Find the right tools, learn how to use them, and get more done."
+>
+
+  <!-- HERO -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 pt-20 pb-16">
+    <div class="max-w-2xl">
+      <div class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#D95E00] bg-[#FFF2E8] px-3 py-1.5 rounded-full mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-[#D95E00]"></span>
+        For Freelancers &amp; Creators
+      </div>
+      <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-6">
+        Use AI the way<br/>professionals actually do.
+      </h1>
+      <p class="text-lg text-gray-600 leading-relaxed mb-8 max-w-xl">
+        Honest reviews of AI tools, practical guides, and ready-to-use prompt packs.
+        No hype. No "AI will replace you" panic. Just what works.
+      </p>
+      <div class="flex flex-wrap gap-3">
+        <a href="/blog"
+           class="bg-[#D95E00] text-white font-semibold px-6 py-3 rounded-full hover:bg-[#bf5200] transition-colors">
+          Read the blog
+        </a>
+        <a href="/products"
+           class="border border-gray-200 text-gray-700 font-semibold px-6 py-3 rounded-full hover:border-gray-400 transition-colors">
+          Browse products
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIVIDER -->
+  <div class="border-t border-gray-100"></div>
+
+  <!-- FEATURED PRODUCT -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 py-16">
+    <div class="flex flex-col sm:flex-row gap-8 items-start">
+      <!-- Product card -->
+      <div class="flex-1 bg-gray-950 text-white rounded-2xl p-8">
+        <div class="text-xs font-bold uppercase tracking-widest text-[#D95E00] mb-3">New Release</div>
+        <h2 class="text-2xl font-bold mb-3">The Freelance Writer's<br/>AI Prompt Arsenal</h2>
+        <p class="text-gray-400 text-sm leading-relaxed mb-6">
+          75 battle-tested prompts across 8 categories. Client emails, cold pitches, blank pages,
+          late invoices — there's a prompt for all of it. 42 pages. Instant download.
+        </p>
+        <div class="flex items-center gap-4">
+          <a href="https://promptkit5.gumroad.com/l/hoimsp" target="_blank" rel="noopener"
+             class="bg-[#D95E00] text-white font-semibold px-5 py-2.5 rounded-full text-sm hover:bg-[#bf5200] transition-colors">
+            Get it for $17 &rarr;
+          </a>
+          <span class="text-gray-500 text-sm">PDF · Instant download</span>
+        </div>
+      </div>
+      <!-- What's inside -->
+      <div class="flex-1">
+        <h3 class="font-bold text-gray-900 mb-4">What's inside</h3>
+        <ul class="space-y-3">
+          {[
+            ['Client Wrangling', '10 prompts'],
+            ['Research Without Rabbit Holes', '8 prompts'],
+            ['Outline & Structure', '8 prompts'],
+            ['Actually Writing', '10 prompts'],
+            ['Editing & Polishing', '8 prompts'],
+            ['Headlines That Get Clicked', '8 prompts'],
+            ['Pitching & Cold Outreach', '10 prompts'],
+            ['Running the Business', '13 prompts'],
+          ].map(([cat, count]) => (
+            <li class="flex items-center justify-between text-sm border-b border-gray-50 pb-3 last:border-0">
+              <span class="text-gray-700">{cat}</span>
+              <span class="text-[#D95E00] font-semibold text-xs">{count}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIVIDER -->
+  <div class="border-t border-gray-100"></div>
+
+  <!-- RECENT BLOG POSTS -->
+  {posts.length > 0 && (
+    <section class="max-w-5xl mx-auto px-4 sm:px-6 py-16">
+      <div class="flex items-center justify-between mb-10">
+        <h2 class="text-2xl font-bold text-gray-900">Latest from the blog</h2>
+        <a href="/blog" class="text-sm text-[#D95E00] font-semibold hover:underline">View all &rarr;</a>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {posts.map(post => (
+          <a href={`/blog/${post.slug}`} class="group block border border-gray-100 rounded-xl p-6 hover:border-gray-300 transition-colors">
+            {post.data.tags.length > 0 && (
+              <span class="text-xs font-semibold uppercase tracking-wide text-[#D95E00]">{post.data.tags[0]}</span>
+            )}
+            <h3 class="mt-2 font-bold text-gray-900 leading-snug group-hover:text-[#D95E00] transition-colors">
+              {post.data.title}
+            </h3>
+            <p class="mt-2 text-sm text-gray-500 line-clamp-2">{post.data.description}</p>
+            <div class="mt-4 text-xs text-gray-400">
+              {post.data.pubDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- WHY THIS SITE EXISTS -->
+  <section class="bg-gray-950 text-white mt-8">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-16">
+      <div class="max-w-2xl">
+        <h2 class="text-2xl font-bold mb-4">Why AI Prompt Kit exists</h2>
+        <p class="text-gray-400 leading-relaxed mb-4">
+          There's a lot of noise around AI tools. Every week there's a new "game-changer" and
+          a new round of "X is going to replace Y" takes. Most of it is marketing.
+        </p>
+        <p class="text-gray-400 leading-relaxed">
+          This site is for people who actually use these tools to do their work — freelancers,
+          writers, small business owners who want honest takes on what's worth paying for,
+          what's overrated, and how to get real results from the tools they already have.
+        </p>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>

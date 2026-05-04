@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout
+  title="Blog — AI Tools Reviews & Guides for Freelancers"
+  description="Honest reviews and practical guides on AI tools for freelancers, writers, and small business owners. No hype, just what works."
+>
+  <div class="max-w-2xl mx-auto px-4 sm:px-6 py-16">
+    <h1 class="text-3xl font-bold text-gray-900 mb-2">Blog</h1>
+    <p class="text-gray-500 mb-12">Honest reviews and guides on AI tools that freelancers actually use.</p>
+
+    {posts.length === 0 ? (
+      <p class="text-gray-400">First articles coming soon.</p>
+    ) : (
+      <div class="divide-y divide-gray-100">
+        {posts.map(post => (
+          <a href={`/blog/${post.slug}`} class="group flex flex-col py-8 first:pt-0">
+            {post.data.tags.length > 0 && (
+              <span class="text-xs font-semibold uppercase tracking-wide text-[#D95E00] mb-2">
+                {post.data.tags[0]}
+              </span>
+            )}
+            <h2 class="text-xl font-bold text-gray-900 group-hover:text-[#D95E00] transition-colors leading-snug mb-2">
+              {post.data.title}
+            </h2>
+            <p class="text-gray-500 text-sm leading-relaxed mb-3">{post.data.description}</p>
+            <time class="text-xs text-gray-400" datetime={post.data.pubDate.toISOString()}>
+              {post.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+            </time>
+          </a>
+        ))}
+      </div>
+    )}
+  </div>
+</BaseLayout>
